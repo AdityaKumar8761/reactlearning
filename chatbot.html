@@ -20,7 +20,6 @@
                     <input 
                         placeholder="Send a message to Chatbot" 
                         size="30"></input>
-                    <button>Send</button>
                 </>
             );
         }
@@ -61,7 +60,7 @@
                 id: 'id2'
             }]
             );
-            const [chatMessages, setChatMessages] = array;   //array destructuring 
+            const [chatMessages, setChatMessage] = array;   //array destructuring 
             //const chatMessages = array[0];  //first value of useState is an array
             //const setChatMessage = array[1];  //second value of useState is a function -->updater fundtion
  
@@ -82,7 +81,7 @@
             return (
             <>
 
-            <button onClick={sendMessage}> Send message </button>
+            <button onClick={sendMessage}> Send </button>
 
             { chatMessages.map((chatMessage)=>{
                     return(
