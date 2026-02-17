@@ -25,6 +25,8 @@
             );
         }
         
+
+
         function ChatMessage(props){            //destructuring function ChatMessage({ message, sender })
                                                 //probs == variable similar
             const { message } = props;
@@ -44,18 +46,56 @@
             )
         }
 
+
+
+        function ChatMessages(){
+            const chatMessages = [{
+                message: 'hello chatbot',
+                sender: 'user',
+                id: "id1"
+            },{
+                message: 'hello! how can i help you?',
+                sender: 'robot',
+                id: 'id2'
+            }]; 
+
+            function sendMessage() {
+                chatMessages.push({
+                    message: 'test',
+                    sender: 'user',
+                    id: crypto.randomUUID()
+                });
+                console.log(chatMessages);
+            }
+
+            return (
+            <>
+
+            <button onClick={sendMessage}> Send message </button>
+
+            { chatMessages.map((chatMessage)=>{
+                    return(
+                            <ChatMessage 
+                                message ={chatMessage.message}
+                                sender = {chatMessage.sender}
+                                key = {chatMessage.id}
+                            />
+                    );
+            })}
+        </>
+    )}
+
+
+
+
         function App(){
+             // next step
+        //map create a new array and perform the operation or function given in the array    // array.map((value , index , array)=>{operation/function})
             return(
             <>  
                 <ChatInput />
-                <ChatMessage 
-                    message="hello chatbot" 
-                    sender="user"
-                />
-                <ChatMessage 
-                    message="hello! how can i help you?" 
-                    sender="robot"
-                />
+                <ChatMessages/>
+
             </>
         )
         }
