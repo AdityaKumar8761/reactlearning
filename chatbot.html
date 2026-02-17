@@ -49,7 +49,9 @@
 
 
         function ChatMessages(){
-            const chatMessages = [{
+            //react useState return array
+            const array=React.useState(
+            [{
                 message: 'hello chatbot',
                 sender: 'user',
                 id: "id1"
@@ -57,16 +59,25 @@
                 message: 'hello! how can i help you?',
                 sender: 'robot',
                 id: 'id2'
-            }]; 
+            }]
+            );
+            const [chatMessages, setChatMessages] = array;   //array destructuring 
+            //const chatMessages = array[0];  //first value of useState is an array
+            //const setChatMessage = array[1];  //second value of useState is a function -->updater fundtion
+ 
 
             function sendMessage() {
-                chatMessages.push({
-                    message: 'test',
-                    sender: 'user',
-                    id: crypto.randomUUID()
-                });
-                console.log(chatMessages);
+                setChatMessage([
+                    ...chatMessages,   // spread operator to coppy an array
+                    {
+                        message: 'test',
+                        sender: 'user',
+                        id: crypto.randomUUID()
+                    }
+                ]);
             }
+
+            //react state end 
 
             return (
             <>
