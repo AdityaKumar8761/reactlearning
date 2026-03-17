@@ -11,20 +11,77 @@
     <script src="https://unpkg.com/supersimpledev/react.js"></script>
     <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
 
+    <script src="https://unpkg.com/supersimpledev/chatbot.js"></script>
+    
     <script src="https://unpkg.com/supersimpledev/babel.js"></script>
     <script type="text/babel">
-        function ChatInput(){
+
+
+
+
+
+
+
+
+        function ChatInput({ chatMessages , setChatMessage}){
+            const [inputText , setInputText] = React.useState('')
+            function saveInputText(event){
+                setInputText(event.target.value);
+            }
+
+            function sendMessage(){
+                const newChatMessages=[
+                    ...chatMessages,   // spread operator to coppy an array
+                    {
+                        message: inputText,
+                        sender: 'user',
+                        id: crypto.randomUUID()  //generate random id(java script code)
+                    }
+                ]
+                setChatMessage(newChatMessages);
+
+                const response = Chatbot.getResponse(inputText);
+
+                setChatMessage([
+                    ...newChatMessages,
+                    {
+                        message: response,
+                        sender: 'robot',
+                        id: crypto.randomUUID()
+                    }
+                ])
+
+                setInputText('');
+            }
+
             return (  //fragment <> </> does not insert div full work like a div
 
                 <>   
                     <input 
                         placeholder="Send a message to Chatbot" 
-                        size="30"></input>
+                        size="30"
+                        onChange={saveInputText}
+                        value={inputText}   // this make the text box empty  //controlled input 
+                    />
+                    <button
+                        onClick={sendMessage}    
+                    >Send</button>
                 </>
             );
         }
-        
 
+
+
+
+
+
+
+
+
+
+
+      //function that set the chatMessage data as props  
+      //this function is being used by the chatMessages
 
         function ChatMessage(props){            //destructuring function ChatMessage({ message, sender })
                                                 //probs == variable similar
@@ -47,42 +104,20 @@
 
 
 
-        function ChatMessages(){
-            //react useState return array
-            const array=React.useState(
-            [{
-                message: 'hello chatbot',
-                sender: 'user',
-                id: "id1"
-            },{
-                message: 'hello! how can i help you?',
-                sender: 'robot',
-                id: 'id2'
-            }]
-            );
-            const [chatMessages, setChatMessage] = array;   //array destructuring 
-            //const chatMessages = array[0];  //first value of useState is an array
-            //const setChatMessage = array[1];  //second value of useState is a function -->updater fundtion
- 
 
-            function sendMessage() {
-                setChatMessage([
-                    ...chatMessages,   // spread operator to coppy an array
-                    {
-                        message: 'test',
-                        sender: 'user',
-                        id: crypto.randomUUID()
-                    }
-                ]);
-            }
 
-            //react state end 
+        //lifiting the stateUP 
+        //move the chatMessage, setChatMessage to App form chatmessages
+
+
+
+
+
+
+        function ChatMessages({ chatMessages }){
 
             return (
             <>
-
-            <button onClick={sendMessage}> Send </button>
-
             { chatMessages.map((chatMessage)=>{
                     return(
                             <ChatMessage 
@@ -98,13 +133,61 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+    //APP function
+
         function App(){
+
+            //react useState return array
+            const [chatMessages , setChatMessage]=React.useState(()=>{
+                return(
+            [{
+                message: 'hello chatbot',
+                sender: 'user',
+                id: "id1"
+            },{
+                message: 'hello! how can i help you?',
+                sender: 'robot',
+                id: 'id2'
+            },{
+
+                message: "bring me thanos",
+                sender: 'user',
+                id: "id3"
+            },{
+                message: 'one freshly chopped thanos coming right up',
+                sender: 'robot',
+                id: 'id4'
+            }])});
+
+             //array destructuring 
+            //const chatMessages = array[0];  //first value of useState is an array
+            //const setChatMessage = array[1];  //second value of useState is a function -->updater fundtion
+
+            //react state end 
+
+
              // next step
         //map create a new array and perform the operation or function given in the array    // array.map((value , index , array)=>{operation/function})
             return(
             <>  
-                <ChatInput />
-                <ChatMessages/>
+                <ChatInput 
+                    chatMessages ={chatMessages}
+                    setChatMessage = {setChatMessage}
+                    />
+                <ChatMessages
+                    chatMessages ={chatMessages}
+                    />
 
             </>
         )
