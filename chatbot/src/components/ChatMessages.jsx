@@ -1,7 +1,6 @@
 import { useEffect , useRef } from "react";
 import robot from '../assets/robot.png'
 import user from '../assets/robot.png'
-import "./ChatMessages.css"
 
 
 
