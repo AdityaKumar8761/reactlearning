@@ -17,8 +17,6 @@ export function HomePage({cart}){
 
 },[])
 
-
-
     return (
         <>
             <Header cart ={cart}/>
