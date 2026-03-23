@@ -9,3 +9,8 @@
 // })
 // await loadcart()
 
+
+// await axios.delete(`url/${cartItem.productId}`);
+// await loadCart()
+
+
