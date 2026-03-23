@@ -3,7 +3,7 @@ import { useEffect , useState} from 'react';
 import axios from 'axios';
 import { Header } from '../components/Header'
 
-export function HomePage({cart}){
+export function HomePage({cart , loadCart }){
     const [products,setproducts] = useState([])
 
     //control the rerendering of the homepage
@@ -68,7 +68,14 @@ export function HomePage({cart}){
                     Added
                 </div>
 
-                <button className="add-to-cart-button button-primary">
+                <button className="add-to-cart-button button-primary"
+                            onClick={async ()=>{
+                                await axios.post('/api/cart-items', {
+                                productId: product.id,
+                                quantity: 1
+                        })
+                        await loadCart();
+                    }}>
                     Add to Cart
                 </button>
                 </div>
